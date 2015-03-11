@@ -1,4 +1,4 @@
-package com.cuberob.wearaccuracy;
+package com.cuberob.wearaccuracy.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.cuberob.wearaccuracy.R;
 
 import java.util.Random;
 
