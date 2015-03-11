@@ -11,6 +11,8 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
@@ -140,6 +142,7 @@ public class GooglePlayServicesActivity extends Activity implements
      * @param path the path on which the message should be send
      */
     public void sendMessage(byte[] message, String path) {
+        Log.d(TAG, "Request to send message to path: " + path);
         if(path.charAt(0) != '/'){
             Log.e(TAG, "Path should start with /, cancelling message...");
             return;
@@ -156,7 +159,14 @@ public class GooglePlayServicesActivity extends Activity implements
 
 
         for(Node node : mConnectedNodes){
-            Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), path, message);
+            Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), path, message).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                @Override
+                public void onResult(MessageApi.SendMessageResult sendMessageResult) {
+                    if(!sendMessageResult.getStatus().isSuccess()){
+                        Log.e(TAG, "Error when sending message: " + sendMessageResult.getStatus().getStatusCode());
+                    }
+                }
+            });
         }
     }
 
