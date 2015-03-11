@@ -1,12 +1,9 @@
 package com.cuberob.wearaccuracy.services;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
-import com.cuberob.wearaccuracy.activities.FourButtonTest;
-import com.cuberob.wearaccuracy.activities.TwoButtonTest;
+import com.cuberob.wearaccuracy.activities.ButtonTest;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
@@ -22,24 +19,28 @@ public class DataLayer extends WearableListenerService {
 
         if("/start".equals(messageEvent.getPath())){
             if("2".equals(new String(messageEvent.getData()))){
-                startTwoButtonTest();
+                startTwoButtonTest(10);
             }
             if("4".equals(new String(messageEvent.getData()))){
-                startFourButtonTest();
+                startFourButtonTest(10);
             }
         }
     }
 
 
-    private void startFourButtonTest(){
-        Intent i = new Intent(getApplicationContext(), FourButtonTest.class);
+    private void startFourButtonTest(int cycles){
+        Intent i = new Intent(getApplicationContext(), ButtonTest.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("cycles", cycles);
+        i.putExtra("twoButtonMode", false);
         startActivity(i);
     }
 
-    private void startTwoButtonTest(){
-        Intent i = new Intent(getApplicationContext(), TwoButtonTest.class);
+    private void startTwoButtonTest(int cycles){
+        Intent i = new Intent(getApplicationContext(), ButtonTest.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("cycles", cycles);
+        i.putExtra("twoButtonMode", true);
         startActivity(i);
     }
 }
