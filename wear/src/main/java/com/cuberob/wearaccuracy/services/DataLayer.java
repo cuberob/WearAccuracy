@@ -17,13 +17,18 @@ public class DataLayer extends WearableListenerService {
 
         Log.d(TAG, "Message received: " + messageEvent);
 
-        if("/start".equals(messageEvent.getPath())){
-            if("2".equals(new String(messageEvent.getData()))){
-                startTwoButtonTest(10);
-            }
-            if("4".equals(new String(messageEvent.getData()))){
-                startFourButtonTest(10);
-            }
+        if("/start/2".equals(messageEvent.getPath())){
+            startTwoButtonTest(getIntFromMessage(messageEvent));
+        }else if("/start/4".equals(messageEvent.getPath())){
+            startFourButtonTest(getIntFromMessage(messageEvent));
+        }
+    }
+
+    private int getIntFromMessage(MessageEvent messageEvent){
+        try {
+            return Integer.valueOf(new String(messageEvent.getData()));
+        }catch(NumberFormatException nfe){
+            return 10;
         }
     }
 

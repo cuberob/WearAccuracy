@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WearAccuracy</string>
+    <string name="start_two_button_test_button_text">Start Two Button Test</string>
+    <string name="start_four_button_test_button_text">Start Four Button Test</string>
+    <string name="cycles_title_textview">Cycles:</string>
+    <string name="default_cycles_title_textview">10</string>
+    <string name="empty_results_message">Results show up here.</string>
 </resources>

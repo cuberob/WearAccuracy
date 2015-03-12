@@ -1,22 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Four Button Test"
-        android:id="@+id/four_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClick"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:id="@+id/linearLayout">
 
-    <Button
-        android:layout_width="wrap_content"
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_four_button_test_button_text"
+            android:id="@+id/four_button"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_two_button_test_button_text"
+            android:id="@+id/two_button"
+            android:layout_gravity="center_horizontal"
+            android:onClick="onClick"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Two Button Test"
-        android:id="@+id/two_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onClick"/>
-</LinearLayout>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center_horizontal"
+            android:text="@string/cycles_title_textview" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center_horizontal"
+            android:id="@+id/cyclesTextView"
+            android:text="@string/default_cycles_title_textview" />
+        <SeekBar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:id="@+id/seekBar"
+            android:max="25"
+            android:progress="10"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_results_message"
+        android:id="@+id/resultsTextView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/linearLayout"
+        android:gravity="center"/>
+</RelativeLayout>

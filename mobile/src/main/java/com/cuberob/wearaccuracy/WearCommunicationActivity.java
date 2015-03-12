@@ -20,12 +20,16 @@ import com.google.android.gms.wearable.Wearable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
-public class GooglePlayServicesActivity extends Activity implements
+/**
+ * This is a base activity we use to setup and handle communication with the watch
+ * It handles the connection with Google Api Client
+ * It provides some convenience methods to send messages to wearable counterpart
+ */
+public class WearCommunicationActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = "GooglePlayServicesAct";
+    private static final String TAG = "WearCommunicationAct";
 
     private static final String KEY_IN_RESOLUTION = "is_in_resolution";
 
@@ -141,7 +145,7 @@ public class GooglePlayServicesActivity extends Activity implements
      * @param message the message you want to send
      * @param path the path on which the message should be send
      */
-    public void sendMessage(byte[] message, String path) {
+    public void broadcastMessage(byte[] message, String path) {
         Log.d(TAG, "Request to send message to path: " + path);
         if(path.charAt(0) != '/'){
             Log.e(TAG, "Path should start with /, cancelling message...");

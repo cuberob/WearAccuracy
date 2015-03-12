@@ -12,7 +12,8 @@
         android:theme="@android:style/Theme.DeviceDefault" >
         <activity
             android:name=".activities.ButtonTest"
-            android:label="@string/two_button_app_name" >
+            android:label="@string/two_button_app_name"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
