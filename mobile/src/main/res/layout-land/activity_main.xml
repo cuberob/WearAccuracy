@@ -11,20 +11,21 @@
         android:padding="20dp"
         android:text="@string/intro_message"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/linearLayout"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_toStartOf="@+id/linearLayout"
+        android:id="@+id/textView" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:id="@+id/linearLayout"
+        android:padding="8dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center_horizontal"
@@ -65,13 +66,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:gravity="center_horizontal">
 
             <LinearLayout
                 android:layout_width="100dp"
@@ -142,9 +143,9 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/linearLayout2"
+        android:layout_toStartOf="@+id/linearLayout">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -174,8 +175,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_above="@+id/linearLayout2">
+        android:layout_above="@+id/linearLayout2"
+        android:layout_toStartOf="@+id/linearLayout"
+        android:layout_below="@+id/textView">
         <com.cuberob.wearaccuracy.views.PieChart
             android:paddingTop="10dp"
             android:paddingBottom="10dp"

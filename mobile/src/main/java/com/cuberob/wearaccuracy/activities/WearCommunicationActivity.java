@@ -1,4 +1,4 @@
-package com.cuberob.wearaccuracy;
+package com.cuberob.wearaccuracy.activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
