@@ -84,34 +84,15 @@ public class MainActivity extends WearCommunicationActivity implements MessageAp
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setupListener();
-            }
-        }).start();
-
-    }
-
-    private void setupListener() {
-        try {
-            Thread.sleep(1000); //Give WearCommunicationActivity a second to setup connection to Google Play
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(!getGoogleApiClient().isConnected()) {
-            Log.e(TAG, "Google Api Client Not Connected in onResume");
-            return;
-        }
+    public void onConnected(Bundle connectionHint) {
+        super.onConnected(connectionHint);
         Wearable.MessageApi.addListener(getGoogleApiClient(), this);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
         Wearable.MessageApi.removeListener(getGoogleApiClient(), this);
+        super.onStop();
     }
 
     @Override
@@ -143,9 +124,9 @@ public class MainActivity extends WearCommunicationActivity implements MessageAp
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putString(RESULTS, mResultsTextView.getText().toString());
         outState.putSerializable(PIE_DATA, (ArrayList) mPieChart.getData());
-        super.onSaveInstanceState(outState);
     }
 
     private class TestResult {
