@@ -2,8 +2,8 @@ An application that can be used to assess how accurate someone is when it comes 
 
 Will be used to analyse how able older people are to press the desired button on a smart watch.
 
-[!Alt text](http://i.imgur.com/zqzExCY.png "Portrait")
+![alt tag](http://i.imgur.com/zqzExCY.png)
 Potrait Smartphone interface
 
-[!Alt text](http://i.imgur.com/OlOO7GW.png "LandScape")
+![alt tag](http://i.imgur.com/OlOO7GW.png)
 LandScape Smartphone interface
