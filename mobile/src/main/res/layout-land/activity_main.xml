@@ -164,8 +164,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.8"
             android:id="@+id/seekBar"
-            android:max="25"
-            android:progress="10"
+            android:max="23"
+            android:progress="8"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"/>
 
