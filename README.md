@@ -6,4 +6,4 @@ Will be used to analyse how able older people are to press the desired button on
 Potrait Smartphone interface
 
 ![alt tag](http://i.imgur.com/OlOO7GW.png)
-LandScape Smartphone interface
+Landscape Smartphone interface
