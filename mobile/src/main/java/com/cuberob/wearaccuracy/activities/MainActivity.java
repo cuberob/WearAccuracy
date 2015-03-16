@@ -1,159 +1,103 @@
 package com.cuberob.wearaccuracy.activities;
 
-import android.content.res.Configuration;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.SeekBar;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cuberob.wearaccuracy.R;
-import com.cuberob.wearaccuracy.views.PieChart;
-import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.MessageEvent;
-import com.google.android.gms.wearable.Wearable;
-import com.google.gson.Gson;
+import com.cuberob.wearaccuracy.adapters.DrawerAdapter;
+import com.cuberob.wearaccuracy.fragments.VibrationFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends BaseActivity implements ListView.OnItemClickListener {
 
-/**
- * Created by rob.knegt on 11-3-2015.
- */
-public class MainActivity extends WearCommunicationActivity implements MessageApi.MessageListener {
-
-    private static final String TAG = "MainActivity";
-    public static final String RESULTS = "results";
-    public static final String PIE_DATA = "pie_data";
-
-    private SeekBar mSeekBar;
-    private TextView mTestSizeTextView, mResultsTextView;
-    private PieChart mPieChart;
+    public static final String TAG = "MainActivity";
+    Toolbar mToolbar;
+    DrawerLayout mDrawerLayout;
+    ListView mDrawerListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progress += 2;
-                mTestSizeTextView.setText(Integer.toString(progress));
-            }
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+        setupDrawer();
+    }
 
-            }
+    private void setupDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerListView = (ListView) findViewById(R.id.left_drawer);
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+        // set a custom shadow that overlays the main content when the drawer opens
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-            }
-        });
-        mTestSizeTextView = (TextView) findViewById(R.id.testSizesTextView);
-        mResultsTextView = (TextView) findViewById(R.id.resultsTextView);
-        mPieChart = (PieChart) findViewById(R.id.pieChart);
+        mDrawerListView.setAdapter(DrawerAdapter.newInstance(this));
+        mDrawerListView.setOnItemClickListener(this);
 
-        mPieChart.addItem(getString(R.string.correct_label), 4, getResources().getColor(android.R.color.holo_green_light));
-        mPieChart.addItem(getString(R.string.incorrect_label), 1, getResources().getColor(android.R.color.holo_red_light));
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name);
+        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        if(savedInstanceState != null){
-            mResultsTextView.setText(savedInstanceState.getString(RESULTS));
-            mPieChart.setData((List<PieChart.Item>)savedInstanceState.getSerializable(PIE_DATA));
+        // enable ActionBar app icon to behave as action to toggle nav drawer and animate accordingly
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
 
+        return super.onOptionsItemSelected(item);
     }
 
-    private byte[] getTestSize(){
-        return mTestSizeTextView.getText().toString().getBytes();
-    }
-
-    public void onClick(View v){
-        int id = v.getId();
-        switch(id){
-            case R.id.four_button:
-                broadcastMessage(getTestSize(), "/start/4");
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        android.app.Fragment fragment = null;
+        switch(position){
+            case 0:
+                fragment = new VibrationFragment();
                 break;
-            case R.id.two_button:
-                broadcastMessage(getTestSize(), "/start/2");
+            case 1:
+                fragment = new VibrationFragment();
+                break;
+            case 2:
+                fragment = new VibrationFragment();
                 break;
         }
+
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        // update selected item and title, then close the drawer
+        mDrawerListView.setItemChecked(position, true);
+        setTitle(((TextView)view.findViewById(R.id.navdrawer_textView)).getText().toString());
+        mDrawerLayout.closeDrawer(mDrawerListView);
     }
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        Wearable.MessageApi.addListener(getGoogleApiClient(), this);
-    }
-
-    @Override
-    protected void onStop() {
-        Wearable.MessageApi.removeListener(getGoogleApiClient(), this);
-        super.onStop();
-    }
-
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-        String response = new String(messageEvent.getData());
-        Gson gson = new Gson();
-        TestResult results = gson.fromJson(response, TestResult.class);
-
-        final String resultString = results.getResultsString();
-        final int correct = results.correct;
-        final int incorrect = results.incorrect;
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mResultsTextView.setText(resultString);
-                mPieChart.clearData();
-                mPieChart.addItem(getString(R.string.correct_label), correct, getResources().getColor(android.R.color.holo_green_light));
-                mPieChart.addItem(getString(R.string.incorrect_label), incorrect, getResources().getColor(android.R.color.holo_red_light));
-            }
-        });
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log.d(TAG, newConfig.toString());
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(RESULTS, mResultsTextView.getText().toString());
-        outState.putSerializable(PIE_DATA, (ArrayList) mPieChart.getData());
-    }
-
-    private class TestResult {
-        public int correct;
-        public int incorrect;
-        public long duration;
-
-        public int total(){
-            return correct + incorrect;
-        }
-
-        public double accuracy(){
-            return (double)correct / (double)total();
-        }
-
-        public long averageDuration(){
-            return duration / (total() - 1);
-        }
-
-        private String getResultsString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Test size: " + total());
-            sb.append("\nCorrect: " + correct);
-            sb.append("\nIncorrect: " + incorrect);
-            sb.append("\nAccuracy: " + (accuracy() * 100) + "%");
-            sb.append("\nPress Speed: " + (averageDuration()) + "ms");
-            return sb.toString();
-        }
-    }
 }

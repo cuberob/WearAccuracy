@@ -1,11 +1,11 @@
 package com.cuberob.wearaccuracy.activities;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * It handles the connection with Google Api Client
  * It provides some convenience methods to send messages to wearable counterpart
  */
-public class WearCommunicationActivity extends Activity implements
+public class BaseActivity extends ActionBarActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
