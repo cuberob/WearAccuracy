@@ -13,6 +13,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
@@ -27,7 +28,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class BaseActivity extends ActionBarActivity implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        MessageApi.MessageListener{
 
     private static final String TAG = "WearCommunicationAct";
 
@@ -181,6 +183,7 @@ public class BaseActivity extends ActionBarActivity implements
     @Override
     protected void onStop() {
         if (mGoogleApiClient != null) {
+            Wearable.MessageApi.removeListener(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
         super.onStop();
@@ -222,7 +225,10 @@ public class BaseActivity extends ActionBarActivity implements
     public void onConnected(Bundle connectionHint) {
         Log.i(TAG, "GoogleApiClient connected");
         refreshConnectedNodes();
+        Wearable.MessageApi.addListener(mGoogleApiClient, this);
     }
+
+
 
     /**
      * Called when {@code mGoogleApiClient} connection is suspended.
@@ -265,5 +271,10 @@ public class BaseActivity extends ActionBarActivity implements
             Log.e(TAG, "Exception while starting resolution activity", e);
             retryConnecting();
         }
+    }
+
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        Log.d(TAG, "Message Received, use override to handle in your activity");
     }
 }

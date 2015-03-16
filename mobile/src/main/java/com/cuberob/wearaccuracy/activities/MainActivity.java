@@ -1,28 +1,34 @@
 package com.cuberob.wearaccuracy.activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.adapters.DrawerAdapter;
-import com.cuberob.wearaccuracy.fragments.VibrationFragment;
+import com.cuberob.wearaccuracy.fragments.ButtonTestFragment;
+import com.cuberob.wearaccuracy.fragments.VibrationTestFragment;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.MessageEvent;
 
-public class MainActivity extends BaseActivity implements ListView.OnItemClickListener {
+public class MainActivity extends BaseActivity implements ListView.OnItemClickListener, VibrationTestFragment.SendMessageListener {
 
     public static final String TAG = "MainActivity";
+    public static final String FRAGMENT_TAG = "main_fragment";
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
     ListView mDrawerListView;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,14 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
         setSupportActionBar(mToolbar);
 
         setupDrawer();
+
+        if(savedInstanceState == null){
+            //New instance, load default fragment
+            showFragment(0);
+        }else{
+            //Rotation change, find fragment for onMessageReceived calls
+            fragment = getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        }
     }
 
     private void setupDrawer() {
@@ -77,27 +91,52 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        android.app.Fragment fragment = null;
+        showFragment(position);
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        super.onConnected(connectionHint);
+
+    }
+
+    private void showFragment(int position) {
+        fragment = null;
         switch(position){
             case 0:
-                fragment = new VibrationFragment();
+                fragment = new ButtonTestFragment();
                 break;
             case 1:
-                fragment = new VibrationFragment();
+                fragment = new VibrationTestFragment();
                 break;
             case 2:
-                fragment = new VibrationFragment();
-                break;
+                //fragment = new VisibilityTestFragment();
+                return; //TODO: change to break
         }
 
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, FRAGMENT_TAG).commit();
 
         // update selected item and title, then close the drawer
         mDrawerListView.setItemChecked(position, true);
-        setTitle(((TextView)view.findViewById(R.id.navdrawer_textView)).getText().toString());
+        setTitle(((DrawerAdapter.NavigationDrawerItem) mDrawerListView.getItemAtPosition(position)).name);
         mDrawerLayout.closeDrawer(mDrawerListView);
     }
 
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        //Pass message to current fragment
+        if(fragment instanceof MessageApi.MessageListener) {
+            ((MessageApi.MessageListener) fragment).onMessageReceived(messageEvent);
+        }else{
+            Log.d(TAG, "Fragment should implement MessageApi.MessageListener to receive messages");
+        }
+    }
+
+    @Override
+    public void sendMessage(byte[] bytes, String path) {
+        broadcastMessage(bytes, path);
+        Log.d(TAG, "Path: " + path);
+    }
 }
