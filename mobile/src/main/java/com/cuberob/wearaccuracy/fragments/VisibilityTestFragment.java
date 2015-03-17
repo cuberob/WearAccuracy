@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
@@ -19,6 +20,8 @@ import com.google.android.gms.wearable.MessageEvent;
 public class VisibilityTestFragment extends Fragment implements MessageApi.MessageListener{
 
     SendMessageListener mListener;
+
+    EditText mEditText;
 
     public VisibilityTestFragment() {
         // Required empty public constructor
@@ -34,9 +37,11 @@ public class VisibilityTestFragment extends Fragment implements MessageApi.Messa
         v.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.sendMessage("Some story goes here to test if this is readable, soon more text sizes...".getBytes(), "/start/notification");
+                mListener.sendMessage(mEditText.getText().toString().getBytes(), "/start/notification/default");
             }
         });
+
+        mEditText = (EditText) v.findViewById(R.id.editText);
 
         return v;
     }

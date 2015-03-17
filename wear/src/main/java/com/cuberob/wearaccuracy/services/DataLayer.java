@@ -32,8 +32,10 @@ public class DataLayer extends WearableListenerService {
             int duration = getIntFromMessage(messageEvent);
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(duration);
-        }else if("/start/notification".equals(path)){
+        }else if("/start/notification/default".equals(path)){
             spawnNotification(new String(messageEvent.getData()));
+        }else if("/start/notification/large".equals(path)){
+            startLargeTextTest(new String(messageEvent.getData()));
         }
     }
 
@@ -43,7 +45,7 @@ public class DataLayer extends WearableListenerService {
                 .setContentTitle("Visibility Test")
                 .setContentText(content)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setVibrate(new long[] {0, 100});
+                .setVibrate(new long[] {100, 100, 100});
         NotificationManager man = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         man.notify(1337 ,notificationBuilder.build());
     }
@@ -56,7 +58,6 @@ public class DataLayer extends WearableListenerService {
             return 10;
         }
     }
-
 
     private void startFourButtonTest(int cycles){
         Intent i = new Intent(getApplicationContext(), ButtonTest.class);
@@ -72,5 +73,9 @@ public class DataLayer extends WearableListenerService {
         i.putExtra("cycles", cycles);
         i.putExtra("twoButtonMode", true);
         startActivity(i);
+    }
+
+    private void startLargeTextTest(String content){
+
     }
 }

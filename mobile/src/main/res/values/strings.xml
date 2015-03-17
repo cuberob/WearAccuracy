@@ -19,10 +19,14 @@
     <string name="incorrect_label">Incorrect</string>
 
     <!-- Visibility Fragment -->
+    <string name="visibility_test_intro_message">Visibility Fragment\n\nThis test is used to check the ability of the testee\nto read text at a certain size</string>
+    <string name="default_text_size_button_title">Show Default Notification</string>
 
     <!-- Vibration Fragment -->
     <string name="vibration_test_intro_message">Wear Feedback Test\n\nThis simple test can be used to get an indication\nof the vibration duration that is necessary\nfor it to be recognized by the audience</string>
     <string name="vibrate_test_button_text">Vibrate Watch</string>
     <string name="vibrate_duration_title">Vibrate Duration:</string>
+    <string name="default_visibility_content">The quick brown fox jumps over the fence</string>
+    <string name="message_to_send">Message to send:</string>
 
 </resources>

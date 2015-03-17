@@ -4,14 +4,36 @@
     tools:context="com.cuberob.wearaccuracy.fragments.VisibilityTestFragment">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Visibility Fragment"
-        android:layout_gravity="center_horizontal|top" />
+        android:text="@string/visibility_test_intro_message"
+        android:layout_gravity="center_horizontal|top"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="@string/default_text_size_button_title"
         android:id="@+id/button"
         android:layout_gravity="center" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal|bottom">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/message_to_send"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:id="@+id/editText"
+            android:text="@string/default_visibility_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
+    </LinearLayout>
 
 </FrameLayout>
