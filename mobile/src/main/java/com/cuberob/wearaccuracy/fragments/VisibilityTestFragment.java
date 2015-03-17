@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.cuberob.Paths;
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.google.android.gms.wearable.MessageApi;
@@ -56,19 +57,19 @@ public class VisibilityTestFragment extends Fragment implements MessageApi.Messa
         switch(size){
             case 0:
                 //small
-                mListener.sendMessage(mEditText.getText().toString().getBytes(), "/start/visibility/small");
+                mListener.sendMessage(mEditText.getText().toString().getBytes(), Paths.START_VISIBILITY_SMALL_TEST_PATH);
                 break;
             case 1:
                 //medium
-                mListener.sendMessage(mEditText.getText().toString().getBytes(), "/start/visibility/medium");
+                mListener.sendMessage(mEditText.getText().toString().getBytes(), Paths.START_VISIBILITY_MEDIUM_TEST_PATH);
                 break;
             case 2:
                 //large
-                mListener.sendMessage(mEditText.getText().toString().getBytes(), "/start/visibility/large");
+                mListener.sendMessage(mEditText.getText().toString().getBytes(), Paths.START_VISIBILITY_LARGE_TEST_PATH);
                 break;
             case 3:
                 //default notification
-                mListener.sendMessage(mEditText.getText().toString().getBytes(), "/start/visibility/default");
+                mListener.sendMessage(mEditText.getText().toString().getBytes(), Paths.START_VISIBILITY_DEFAULT_TEST_PATH);
                 break;
             default:
                 Log.e(TAG, "Invalid size, should be in range 0 - 3");

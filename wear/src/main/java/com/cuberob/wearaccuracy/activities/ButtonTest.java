@@ -1,10 +1,10 @@
 package com.cuberob.wearaccuracy.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.wearable.view.WatchViewStub;
-import android.util.Log;
 import android.view.View;
 
 import com.cuberob.wearaccuracy.R;
@@ -16,6 +16,8 @@ import java.util.Random;
 
 public class ButtonTest extends BaseActivity {
 
+    public static final String TEST_SIZE = "test_size:int";
+    public static final String TWO_BUTTON_MODE = "twoButtonMode:boolean";
     int buttonIds[];
     int toPress;
     int correct = 0;
@@ -33,8 +35,8 @@ public class ButtonTest extends BaseActivity {
         setContentView(R.layout.activity_button_test);
 
         //Get test settings from intent
-        cycles = getIntent().getIntExtra("cycles", 10);
-        twoButtonMode = getIntent().getBooleanExtra("twoButtonMode", false);
+        cycles = getIntent().getIntExtra(TEST_SIZE, 10);
+        twoButtonMode = getIntent().getBooleanExtra(TWO_BUTTON_MODE, false);
 
         //Get vibrator for feedback
         mVibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
@@ -117,14 +119,12 @@ public class ButtonTest extends BaseActivity {
             return;
         }
 
-        Log.d("Score", "Correct: " + correct + " InCorrect: " + incorrect);
         gotoNextCycle();
-
     }
 
     private void gotoNextCycle() {
         if(twoButtonMode) {
-            toPress = buttonIds[randInt(0, 1)];
+            toPress = buttonIds[randInt(0,1)];
         }else{
             toPress = buttonIds[randInt(0,3)];
         }
@@ -135,5 +135,13 @@ public class ButtonTest extends BaseActivity {
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
+    }
+
+    public static Intent getStartIntent(Context context, int testSize, boolean twoButtonMode){
+        Intent i = new Intent(context, ButtonTest.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra(TEST_SIZE, testSize);
+        i.putExtra(TWO_BUTTON_MODE, twoButtonMode);
+        return i;
     }
 }

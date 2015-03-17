@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.cuberob.Paths;
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.cuberob.wearaccuracy.views.PieChart;
@@ -81,13 +82,13 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
         v.findViewById(R.id.two_button).setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.sendMessage(getTestSize(), "/start/2");
+                mListener.sendMessage(getTestSize(), Paths.START_TWO_BUTTON_TEST_PATH);
             }
         });
         v.findViewById(R.id.four_button).setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.sendMessage(getTestSize(), "/start/4");
+                mListener.sendMessage(getTestSize(), Paths.START_FOUR_BUTTON_TEST_PATH);
             }
         });
 
