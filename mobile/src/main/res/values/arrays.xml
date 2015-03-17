@@ -14,6 +14,7 @@
     </array>
 
 
+    <!-- Vibration Fragment -->
     <string-array name="vibration_duration_spinner_entries">
         <item>0.1 Second</item>
         <item>0.2 Second</item>
@@ -27,5 +28,13 @@
         <item>500</item>
         <item>1000</item>
         <item>2000</item>
+    </string-array>
+
+    <!-- Visibility Fragment -->
+    <string-array name="visibility_text_size_spinner_entries">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+        <item>Default Notification</item>
     </string-array>
 </resources>

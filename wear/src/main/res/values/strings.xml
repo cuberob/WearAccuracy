@@ -2,4 +2,5 @@
     <string name="app_name">WearAccuracy</string>
     <string name="four_button_app_name">Four Button Test</string>
     <string name="two_button_app_name">Two Button Test</string>
+    <string name="visibility_test_placeholder_text">No Message Received</string>
 </resources>
