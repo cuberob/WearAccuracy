@@ -19,7 +19,7 @@
     <string name="incorrect_label">Incorrect</string>
 
     <!-- Visibility Fragment -->
-    <string name="visibility_test_intro_message">Visibility Fragment\n\nThis test is used to check the ability of the testee\nto read text at a certain size</string>
+    <string name="visibility_test_intro_message">Wear Visibility Test\n\nThis test can be used to check the ability of the testee\nto read text at a certain size</string>
     <string name="default_text_size_button_title">Show Default Notification</string>
 
     <!-- Vibration Fragment -->
