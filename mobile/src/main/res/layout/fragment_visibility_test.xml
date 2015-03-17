@@ -3,7 +3,15 @@
     android:layout_height="match_parent"
     tools:context="com.cuberob.wearaccuracy.fragments.VisibilityTestFragment">
 
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Visibility Fragment" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Visibility Fragment"
+        android:layout_gravity="center_horizontal|top" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/button"
+        android:layout_gravity="center" />
 
 </FrameLayout>

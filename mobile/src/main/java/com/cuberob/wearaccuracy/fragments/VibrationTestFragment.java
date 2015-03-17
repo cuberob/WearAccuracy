@@ -12,9 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.cuberob.wearaccuracy.R;
-import com.cuberob.wearaccuracy.activities.BaseActivity;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 
@@ -68,11 +66,6 @@ public class VibrationTestFragment extends Fragment implements MessageApi.Messag
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement SendMessageListener");
-        }
-        GoogleApiClient googleApiClient = ((BaseActivity) getActivity()).getGoogleApiClient();
-        if(googleApiClient == null){
-            Log.d(TAG, "was null");
-            return;
         }
     }
 

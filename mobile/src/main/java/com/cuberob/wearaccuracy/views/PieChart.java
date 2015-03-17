@@ -941,7 +941,7 @@ public class PieChart extends ViewGroup {
     /**
      * Maintains the state for a data item.
      */
-    public class Item implements Serializable{
+    public class Item {
         public String mLabel;
         public float mValue;
         public int mColor;

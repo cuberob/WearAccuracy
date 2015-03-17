@@ -21,7 +21,6 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +30,8 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
 
     private static final String TAG = "ButtonTestActivity";
     public static final String RESULTS = "results";
-    public static final String PIE_DATA = "pie_data";
+    public static final String RESULTS_CORRECT = "results_correct";
+    public static final String RESULTS_INCORRECT = "results_incorrect";
 
     private SeekBar mSeekBar;
     private TextView mTestSizeTextView, mResultsTextView;
@@ -43,6 +43,7 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_button_test, container, false);
+
         mSeekBar = (SeekBar) v.findViewById(R.id.seekBar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -61,8 +62,10 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
 
             }
         });
+
         mTestSizeTextView = (TextView) v.findViewById(R.id.testSizesTextView);
         mResultsTextView = (TextView) v.findViewById(R.id.resultsTextView);
+
         mPieChart = (PieChart) v.findViewById(R.id.pieChart);
 
         mPieChart.addItem(getString(R.string.correct_label), 4, getResources().getColor(android.R.color.holo_green_light));
@@ -82,10 +85,13 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
             }
         });
 
+        setRetainInstance(true);
         if(savedInstanceState != null){
-            Log.d(TAG, "savedInstance not null");
+            //Restore settings after rotation change
             mResultsTextView.setText(savedInstanceState.getString(RESULTS));
-            mPieChart.setData((List<PieChart.Item>)savedInstanceState.getSerializable(PIE_DATA));
+            mPieChart.clearData();
+            mPieChart.addItem(getString(R.string.correct_label), savedInstanceState.getInt(RESULTS_CORRECT, 4), getResources().getColor(android.R.color.holo_green_light));
+            mPieChart.addItem(getString(R.string.incorrect_label), savedInstanceState.getInt(RESULTS_INCORRECT, 1), getResources().getColor(android.R.color.holo_red_light));
         }
 
         return v;
@@ -149,7 +155,18 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(RESULTS, mResultsTextView.getText().toString());
-        outState.putSerializable(PIE_DATA, (ArrayList) mPieChart.getData());
+        List<PieChart.Item> data = mPieChart.getData();
+        int correct = 0;
+        int incorrect = 0;
+        for(PieChart.Item item : data){
+            if(item.mLabel.equals(getString(R.string.correct_label))){
+                correct = (int)item.mValue;
+            }else if(item.mLabel.equals(getString(R.string.incorrect_label))){
+                incorrect = (int) item.mValue;
+            }
+        }
+        outState.putInt(RESULTS_CORRECT, correct);
+        outState.putInt(RESULTS_INCORRECT, incorrect);
     }
 
     private class TestResult {
@@ -174,7 +191,7 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
             sb.append("Test size: " + total());
             sb.append("\nCorrect: " + correct);
             sb.append("\nIncorrect: " + incorrect);
-            sb.append("\nAccuracy: " + (accuracy() * 100) + "%");
+            sb.append("\nAccuracy: " + ((int)(accuracy() * 100)) + "%");
             sb.append("\nPress Speed: " + (averageDuration()) + "ms");
             return sb.toString();
         }
