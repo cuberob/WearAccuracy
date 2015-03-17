@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<CheckBoxPreference
+        android:key="example_checkbox"
+        android:title="Example"
+        android:summary="General Setting checkbox, unused for now"
+        android:defaultValue="true" />-->
+
+</PreferenceScreen>

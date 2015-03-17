@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="log_to_disk"
+        android:title="@string/pref_title_log_to_disk"
+        android:summary="@string/pref_summary_log_to_disk"
+        android:defaultValue="false" />
+
+</PreferenceScreen>

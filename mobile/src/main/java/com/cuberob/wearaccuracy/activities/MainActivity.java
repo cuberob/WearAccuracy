@@ -2,6 +2,7 @@ package com.cuberob.wearaccuracy.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.adapters.DrawerAdapter;
@@ -86,7 +86,8 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 

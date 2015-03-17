@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,10 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -126,6 +132,35 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
                 mPieChart.addItem(getString(R.string.incorrect_label), incorrect, getResources().getColor(android.R.color.holo_red_light));
             }
         });
+
+        if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("log_to_disk", false)){
+            logToDisk(resultString);
+        }
+    }
+
+    private void logToDisk(String resultString) {
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/wearAccuracy");
+        myDir.mkdirs();
+
+        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String format = s.format(new Date());
+
+        String filename = format + ".txt";
+        File file = new File (myDir, filename);
+
+        if (file.exists()){
+            file.delete(); //Should never happen
+        }
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(resultString.getBytes());
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
