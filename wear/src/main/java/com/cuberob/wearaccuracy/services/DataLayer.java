@@ -16,14 +16,11 @@ import com.google.android.gms.wearable.WearableListenerService;
 public class DataLayer extends WearableListenerService {
 
     public static final String TAG = "DataLayer";
+    public static final int NOTIFICATION_ID = 1337;
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         super.onMessageReceived(messageEvent);
-
-        Log.d(TAG, "Message received: " + messageEvent);
-
-
 
         //Start correct test based on path
         String path = messageEvent.getPath();
@@ -54,8 +51,7 @@ public class DataLayer extends WearableListenerService {
     }
 
     private void vibrateWatch(int duration) {
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(duration);
+        ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(duration);
     }
 
     private void spawnNotification(String content) {
@@ -65,7 +61,6 @@ public class DataLayer extends WearableListenerService {
                         .setContentText(content)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setVibrate(new long[] {100, 100, 100});
-        NotificationManager man = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        man.notify(1337, notificationBuilder.build());
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 }
