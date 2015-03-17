@@ -14,10 +14,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.cuberob.wearaccuracy.R;
+import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.cuberob.wearaccuracy.views.PieChart;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
     private TextView mTestSizeTextView, mResultsTextView;
     private PieChart mPieChart;
 
-    private VibrationTestFragment.SendMessageListener mListener;
+    private SendMessageListener mListener;
 
     @Nullable
     @Override
@@ -97,7 +99,13 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
     public void onMessageReceived(MessageEvent messageEvent) {
         String response = new String(messageEvent.getData());
         Gson gson = new Gson();
-        TestResult results = gson.fromJson(response, TestResult.class);
+        TestResult results = null;
+        try {
+            results = gson.fromJson(response, TestResult.class);
+        }catch (JsonSyntaxException e){
+            Log.e(TAG, "Could not parse json!");
+            return;
+        }
 
         final String resultString = results.getResultsString();
         final int correct = results.correct;
@@ -123,13 +131,18 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.d(TAG, "Attach");
         try {
-            mListener = (VibrationTestFragment.SendMessageListener) activity;
+            mListener = (SendMessageListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement SendMessageListener");
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override

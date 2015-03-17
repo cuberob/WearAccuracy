@@ -1,9 +1,20 @@
 <resources>
+    <!-- Google PieChart Preview Colors -->
     <color name="seafoam">#ffc6f9e5</color>
     <color name="chartreuse">#ffb6e9b5</color>
     <color name="emerald">#ffa6d9b5</color>
     <color name="bluegrass">#ff96c9b5</color>
     <color name="turquoise">#ff86b9b5</color>
     <color name="slate">#ff76a9b5</color>
-    <color name="colorPrimary">#fff00000</color>
+
+    <!-- Material Theme Colors -->
+    <color name="primary">#8BC34A</color>
+    <color name="primary_dark">#689F38</color>
+    <color name="primary_light">#DCEDC8</color>
+    <color name="accent">#FF5722</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#B6B6B6</color>
+
 </resources>

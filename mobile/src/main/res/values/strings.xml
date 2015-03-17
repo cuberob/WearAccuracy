@@ -1,26 +1,28 @@
 <resources>
     <string name="app_name">WearAccuracy</string>
-    <string name="start_two_button_test_button_text">Start Two Button Test</string>
-    <string name="start_four_button_test_button_text">Start Four Button Test</string>
-    <string name="test_size_title_textview">Test Size:</string>
-    <string name="default_cycles_title_textview">10</string>
-    <string name="intro_message">Wear Accuracy Test\n\nThis test is designed to get a quick impression of the ability of a person to press the correct button on the connected Android Wear device.</string>
-    <string name="results_placeholder_text">Results will show up here</string>
-    <string name="correct_label">Correct</string>
-    <string name="incorrect_label">Incorrect</string>
-    <string name="title_activity_main">MainActivity</string>
-
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_activity_main">WearAccuracy</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Button Fragment -->
+    <string name="start_two_button_test_button_text">Start Two Button Test</string>
+    <string name="start_four_button_test_button_text">Start Four Button Test</string>
+    <string name="test_size_title_textview">Test Size:</string>
+    <string name="default_cycles_title_textview">10</string>
+    <string name="button_test_intro_message">Wear Accuracy Test\n\nThis test is designed to get a quick impression of the ability of a person to press the correct button on the connected Android Wear device.</string>
+    <string name="results_placeholder_text">Results will show up here</string>
+    <string name="correct_label">Correct</string>
+    <string name="incorrect_label">Incorrect</string>
+
+    <!-- Visibility Fragment -->
+
+    <!-- Vibration Fragment -->
+    <string name="vibration_test_intro_message">Wear Feedback Test\n\nThis simple test can be used to get an indication\nof the vibration duration that is necessary\nfor it to be recognized by the audience</string>
+    <string name="vibrate_test_button_text">Vibrate Watch</string>
+    <string name="vibrate_duration_title">Vibrate Duration:</string>
+
 </resources>

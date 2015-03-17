@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import java.util.Random;
 
-public class ButtonTest extends WearCommunicationActivity {
+public class ButtonTest extends BaseActivity {
 
     int buttonIds[];
     int toPress;

@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.activities.BaseActivity;
+import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
@@ -21,11 +23,8 @@ import com.google.android.gms.wearable.MessageEvent;
  */
 public class VibrationTestFragment extends Fragment implements MessageApi.MessageListener{
 
-    public static interface SendMessageListener {
-        public void sendMessage(byte[] bytes, String path);
-    }
-
     SendMessageListener mListener;
+    Spinner mSpinner;
 
     public static final String TAG = "VibrationFragment";
 
@@ -43,11 +42,17 @@ public class VibrationTestFragment extends Fragment implements MessageApi.Messag
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.sendMessage("1000".getBytes(), "/start/vibration");
+                mListener.sendMessage(getVibrateDuration(), "/start/vibration");
             }
         });
-        setRetainInstance(true);
+
+        mSpinner = (Spinner) v.findViewById(R.id.spinner);
         return v;
+    }
+
+    private byte[] getVibrateDuration(){
+        String[] values = getResources().getStringArray(R.array.vibration_duration_spinner_values);
+        return values[mSpinner.getSelectedItemPosition()].getBytes();
     }
 
     @Override
@@ -72,9 +77,8 @@ public class VibrationTestFragment extends Fragment implements MessageApi.Messag
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
-
-
 }

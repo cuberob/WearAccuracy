@@ -31,7 +31,7 @@ public class BaseActivity extends ActionBarActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         MessageApi.MessageListener{
 
-    private static final String TAG = "WearCommunicationAct";
+    private static final String TAG = "BaseActivity";
 
     private static final String KEY_IN_RESOLUTION = "is_in_resolution";
 
@@ -223,7 +223,6 @@ public class BaseActivity extends ActionBarActivity implements
      */
     @Override
     public void onConnected(Bundle connectionHint) {
-        Log.i(TAG, "GoogleApiClient connected");
         refreshConnectedNodes();
         Wearable.MessageApi.addListener(mGoogleApiClient, this);
     }

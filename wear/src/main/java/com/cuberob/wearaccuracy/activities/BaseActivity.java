@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by robdeknegt on 12/03/15.
  */
-public class WearCommunicationActivity extends Activity implements
+public class BaseActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 

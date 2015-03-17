@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="@string/intro_message"
+        android:text="@string/button_test_intro_message"
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:layout_toStartOf="@+id/linearLayout"
@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentRight="true"
         android:id="@+id/linearLayout"
@@ -33,8 +33,8 @@
             android:layout_marginRight="5dp">
 
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:orientation="vertical"
                 android:background="@android:color/black" >
 
@@ -75,8 +75,8 @@
             android:gravity="center_horizontal">
 
             <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:orientation="vertical"
                 android:background="@android:color/black">
                 <LinearLayout

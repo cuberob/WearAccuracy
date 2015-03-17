@@ -13,15 +13,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.adapters.DrawerAdapter;
 import com.cuberob.wearaccuracy.fragments.ButtonTestFragment;
 import com.cuberob.wearaccuracy.fragments.VibrationTestFragment;
+import com.cuberob.wearaccuracy.fragments.VisibilityTestFragment;
+import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 
-public class MainActivity extends BaseActivity implements ListView.OnItemClickListener, VibrationTestFragment.SendMessageListener {
+public class MainActivity extends BaseActivity implements ListView.OnItemClickListener, SendMessageListener {
 
     public static final String TAG = "MainActivity";
     public static final String FRAGMENT_TAG = "main_fragment";
@@ -83,6 +86,7 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Not yet implemented", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -107,11 +111,11 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
                 fragment = new ButtonTestFragment();
                 break;
             case 1:
-                fragment = new VibrationTestFragment();
+                fragment = new VisibilityTestFragment();
                 break;
             case 2:
-                //fragment = new VisibilityTestFragment();
-                return; //TODO: change to break
+                fragment = new VibrationTestFragment();
+                break;
         }
 
 

@@ -1,6 +1,8 @@
 package com.cuberob.wearaccuracy.services;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.util.Log;
 
 import com.cuberob.wearaccuracy.activities.ButtonTest;
@@ -21,6 +23,10 @@ public class DataLayer extends WearableListenerService {
             startTwoButtonTest(getIntFromMessage(messageEvent));
         }else if("/start/4".equals(messageEvent.getPath())){
             startFourButtonTest(getIntFromMessage(messageEvent));
+        }else if("/start/vibration".equals(messageEvent.getPath())){
+            int duration = getIntFromMessage(messageEvent);
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(duration);
         }
     }
 
@@ -28,6 +34,7 @@ public class DataLayer extends WearableListenerService {
         try {
             return Integer.valueOf(new String(messageEvent.getData()));
         }catch(NumberFormatException nfe){
+            Log.e(TAG, "Failed to format number");
             return 10;
         }
     }
