@@ -1,15 +1,12 @@
 package com.cuberob.wearaccuracy.activities;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.MessageApi;
@@ -21,11 +18,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This is a base activity we use to setup and handle communication with the watch
- * It handles the connection with Google Api Client
- * It provides some convenience methods to send messages to wearable counterpart
+ * Created by robdeknegt on 12/03/15.
  */
-public class WearCommunicationActivity extends Activity implements
+public class BaseActivity extends Activity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -241,17 +236,6 @@ public class WearCommunicationActivity extends Activity implements
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
-        if (!result.hasResolution()) {
-            // Show a localized error dialog.
-            GooglePlayServicesUtil.getErrorDialog(
-                    result.getErrorCode(), this, 0, new OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            retryConnecting();
-                        }
-                    }).show();
-            return;
-        }
         // If there is an existing resolution error being displayed or a resolution
         // activity has started before, do nothing and wait for resolution
         // progress to be completed.
@@ -261,7 +245,7 @@ public class WearCommunicationActivity extends Activity implements
         mIsInResolution = true;
         try {
             result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
-        } catch (SendIntentException e) {
+        } catch (IntentSender.SendIntentException e) {
             Log.e(TAG, "Exception while starting resolution activity", e);
             retryConnecting();
         }
