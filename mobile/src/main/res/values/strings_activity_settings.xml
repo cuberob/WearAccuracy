@@ -4,5 +4,5 @@
     <!-- Settings for Data -->
     <string name="pref_header_data">Data</string>
     <string name="pref_title_log_to_disk">Log To Disk</string>
-    <string name="pref_summary_log_to_disk">When getting test results, write them to disk as csv</string>
+    <string name="pref_summary_log_to_disk">Write test results to disk as .txt file</string>
 </resources>
