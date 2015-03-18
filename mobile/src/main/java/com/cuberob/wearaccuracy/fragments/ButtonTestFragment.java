@@ -1,9 +1,12 @@
 package com.cuberob.wearaccuracy.fragments;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -11,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -133,16 +137,41 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 mResultsTextView.setText(finalResult.getResultsString());
                 mPieChart.clearData();
                 mPieChart.addItem(getString(R.string.correct_label), finalResult.correct, getResources().getColor(android.R.color.holo_green_light));
                 mPieChart.addItem(getString(R.string.incorrect_label), finalResult.incorrect, getResources().getColor(android.R.color.holo_red_light));
+
+                revealView((View) mPieChart.getParent());
 
                 if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("log_to_disk", false)){
                     logToDisk(finalResult);
                 }
             }
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void revealView(View myView){
+        if(Build.VERSION.SDK_INT < 21){
+            Log.i(TAG, "revealView only works on Lollipop");
+            return;
+        }
+        // get the center for the clipping circle
+        int cx = (myView.getLeft() + myView.getRight()) / 2;
+        int cy = (myView.getTop() + myView.getBottom()) / 2;
+
+        // get the final radius for the clipping circle
+        int finalRadius = Math.max(myView.getWidth(), myView.getHeight());
+
+        // create the animator for this view (the start radius is zero)
+        Animator anim =
+                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+
+        // make the view visible and start the animation
+        myView.setVisibility(View.VISIBLE);
+        anim.start();
     }
 
     private void logToDisk(final TestResult result) {

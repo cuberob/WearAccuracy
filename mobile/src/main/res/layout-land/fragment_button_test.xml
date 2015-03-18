@@ -193,7 +193,8 @@
             android:padding="8dp"
             android:gravity="center"
             android:text="@string/results_placeholder_text"
-            android:id="@+id/resultsTextView"  />
+            android:id="@+id/resultsTextView"
+            android:textSize="12dp" />
     </LinearLayout>
 
 
