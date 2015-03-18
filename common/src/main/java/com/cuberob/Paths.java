@@ -4,6 +4,8 @@ public class Paths {
 
     public static final String START_TWO_BUTTON_TEST_PATH = "/start/button/2";
     public static final String START_FOUR_BUTTON_TEST_PATH = "/start/button/4";
+    public static final String RESULTS_BUTTON_TEST_PATH = "/results/button";
+
 
     public static final String START_VIBRATION_TEST_PATH = "/start/vibration";
 

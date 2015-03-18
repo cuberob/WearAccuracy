@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.support.wearable.view.WatchViewStub;
 import android.view.View;
 
+import com.cuberob.Paths;
 import com.cuberob.wearaccuracy.R;
 
 import org.json.JSONException;
@@ -76,8 +77,7 @@ public class ButtonTest extends BaseActivity {
 
     private void finishTest(){
         sendResults();
-        //TODO: Show overlay with go again button?
-        finish(); //TODO: Check if broadcast comes through
+        finish();
     }
 
     private void sendResults() {
@@ -87,17 +87,19 @@ public class ButtonTest extends BaseActivity {
             results.put("correct", correct);
             results.put("incorrect", incorrect);
             results.put("duration", (System.currentTimeMillis() - startTime));
+            int buttons = twoButtonMode ? 2 : 4;
+            results.put("buttons", buttons);
             msg = results.toString();
         } catch (JSONException e) {
             e.printStackTrace();
             msg = "Error";
         }
-        broadcastMessage(msg.getBytes(), "/results");
+        broadcastMessage(msg.getBytes(), Paths.RESULTS_BUTTON_TEST_PATH);
     }
 
     private void updateScore(int viewId){
         if(viewId == toPress){
-            correct++; //correct += (v.getId() == toPress) ? 1 : 0;
+            correct++;
         }else{
             incorrect++;
         }

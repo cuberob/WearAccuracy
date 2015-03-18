@@ -1,6 +1,7 @@
 package com.cuberob.wearaccuracy.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -110,36 +113,83 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
+        if(!messageEvent.getPath().equals(Paths.RESULTS_BUTTON_TEST_PATH)){
+            Log.e(TAG, "Unexpected results path, changed fragment during test?");
+            return;
+        }
+
         String response = new String(messageEvent.getData());
         Gson gson = new Gson();
-        TestResult results = null;
+        TestResult result = null;
         try {
-            results = gson.fromJson(response, TestResult.class);
+            result = gson.fromJson(response, TestResult.class);
         }catch (JsonSyntaxException e){
             Log.e(TAG, "Could not parse json!");
             return;
         }
 
-        final String resultString = results.getResultsString();
-        final int correct = results.correct;
-        final int incorrect = results.incorrect;
+        final TestResult finalResult = result;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mResultsTextView.setText(resultString);
+                mResultsTextView.setText(finalResult.getResultsString());
                 mPieChart.clearData();
-                mPieChart.addItem(getString(R.string.correct_label), correct, getResources().getColor(android.R.color.holo_green_light));
-                mPieChart.addItem(getString(R.string.incorrect_label), incorrect, getResources().getColor(android.R.color.holo_red_light));
+                mPieChart.addItem(getString(R.string.correct_label), finalResult.correct, getResources().getColor(android.R.color.holo_green_light));
+                mPieChart.addItem(getString(R.string.incorrect_label), finalResult.incorrect, getResources().getColor(android.R.color.holo_red_light));
+
+                if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("log_to_disk", false)){
+                    logToDisk(finalResult);
+                }
+            }
+        });
+    }
+
+    private void logToDisk(final TestResult result) {
+        if(result == null){
+            Log.e(TAG, "TestResult cannot be null!");
+            return;
+        }
+
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.setTitle(getActivity().getString(R.string.dialog_log_data_title));
+        dialog.setContentView(R.layout.dialog_log_data);
+
+        final RadioGroup radioSexGroup = (RadioGroup) dialog.findViewById(R.id.radioSex);
+        final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
+        Button saveButton = (Button) dialog.findViewById(R.id.button_save_dialog);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int age = numberPicker.getValue();
+                String gender = (radioSexGroup.getCheckedRadioButtonId() == R.id.radioMale) ? "male" : "female";
+
+                StringBuilder contents = new StringBuilder();
+                contents.append("age:").append(age).append("\n");
+                contents.append("gender:").append(gender).append("\n");
+                contents.append("test_size:").append(result.total()).append("\n");
+                contents.append("correct:").append(result.correct).append("\n");
+                contents.append("incorrect:").append(result.incorrect).append("\n");
+                contents.append("input_speed_ms:").append(result.averageDuration()).append("\n");
+                contents.append("accuracy:").append(String.format("%.2f", result.accuracy())).append("\n");
+                contents.append("buttons:").append(result.buttons);
+
+                writeToDisk(contents.toString());
+                dialog.dismiss();
             }
         });
 
-        if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("log_to_disk", false)){
-            logToDisk(resultString);
-        }
+
+        dialog.show();
     }
 
-    private void logToDisk(String resultString) {
+    /**
+     * Writes contents to storage/wearAccuracy/timestamp.txt
+     * @param contents
+     */
+    private void writeToDisk(String contents) {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/wearAccuracy");
         myDir.mkdirs();
@@ -151,12 +201,13 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
         File file = new File (myDir, filename);
 
         if (file.exists()){
-            file.delete(); //Should never happen
+            Log.e(TAG, "File Already Exists, cancelling write!");
+            return;
         }
 
         try {
             FileOutputStream out = new FileOutputStream(file);
-            out.write(resultString.getBytes());
+            out.write(contents.getBytes());
             out.flush();
             out.close();
         } catch (Exception e) {
@@ -209,6 +260,7 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
         public int correct;
         public int incorrect;
         public long duration;
+        public int buttons;
 
         public int total(){
             return correct + incorrect;
@@ -229,6 +281,7 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
             sb.append("\nIncorrect: " + incorrect);
             sb.append("\nAccuracy: " + ((int)(accuracy() * 100)) + "%");
             sb.append("\nPress Speed: " + (averageDuration()) + "ms");
+            sb.append("\nButtons: " + buttons);
             return sb.toString();
         }
     }

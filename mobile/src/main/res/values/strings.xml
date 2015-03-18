@@ -29,4 +29,12 @@
     <string name="default_visibility_content">The quick brown fox jumps over the fence</string>
     <string name="message_to_send">Message to send:</string>
 
+    <!-- Log dialog -->
+    <string name="dialog_log_data_title">Additional Info</string>
+    <string name="radio_female">Female</string>
+    <string name="radio_male">Male</string>
+    <string name="dialog_log_data_age_title">Age:</string>
+    <string name="dialog_log_data_gender_title">Gender:</string>
+    <string name="save">Save</string>
+
 </resources>
