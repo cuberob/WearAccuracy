@@ -185,7 +185,6 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
         dialog.setTitle(getActivity().getString(R.string.dialog_log_data_title));
         dialog.setContentView(R.layout.dialog_log_data);
 
-
         final RadioGroup radioSexGroup = (RadioGroup) dialog.findViewById(R.id.radioSex);
         final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPicker);
         Button saveButton = (Button) dialog.findViewById(R.id.button_save_dialog);
@@ -210,7 +209,6 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
                 dialog.dismiss();
             }
         });
-
 
         dialog.show();
     }
