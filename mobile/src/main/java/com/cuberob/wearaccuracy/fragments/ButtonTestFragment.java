@@ -210,7 +210,6 @@ public class ButtonTestFragment extends Fragment implements MessageApi.MessageLi
             }
         });
 
-
         dialog.show();
     }
 

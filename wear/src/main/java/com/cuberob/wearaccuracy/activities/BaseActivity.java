@@ -139,21 +139,22 @@ public class BaseActivity extends Activity implements
      * Send message to all connected nodes
      * @param message the message you want to send
      * @param path the path on which the message should be send
+     * @return Returns 0 if success, -1 if error
      */
-    public void broadcastMessage(byte[] message, String path) {
+    public int broadcastMessage(byte[] message, String path) {
         Log.d(TAG, "Request to send message to path: " + path);
         if(path.charAt(0) != '/'){
             Log.e(TAG, "Path should start with /, cancelling message...");
-            return;
+            return -1;
         }
         if(!mGoogleApiClient.isConnected()){
             Log.e(TAG, "Google Api Client is not connected, cancelling message...");
-            return;
+            return -1;
         }
         if(mConnectedNodes == null){
             Log.e(TAG, "Nodes index was empty! Calling refreshConnectedNodes() for you but cancelling message...");
             refreshConnectedNodes();
-            return;
+            return -1;
         }
 
 
@@ -167,6 +168,8 @@ public class BaseActivity extends Activity implements
                 }
             });
         }
+
+        return 0;
     }
 
     /**

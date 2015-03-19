@@ -3,7 +3,8 @@
     package="com.cuberob.wearaccuracy" >
 
     <uses-feature android:name="android.hardware.type.watch" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,12 +14,16 @@
         <activity
             android:name=".activities.ButtonTest"
             android:label="@string/two_button_app_name"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance" >
         </activity>
         <activity
             android:name=".activities.VisibilityTest"
             android:label="@string/app_name"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance" >
+        </activity>
+
+        <activity
+            android:name="android.support.wearable.activity.ConfirmationActivity">
         </activity>
 
         <service
@@ -30,10 +35,15 @@
             </intent-filter>
         </service>
 
-
         <!-- META DATA -->
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-    </application>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
+        <activity
+            android:name=".activities.VoiceTest"
+            android:label="@string/title_activity_voice_test" >
+        </activity>
+    </application>
 
 </manifest>

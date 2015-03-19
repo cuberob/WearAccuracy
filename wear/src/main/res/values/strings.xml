@@ -3,4 +3,10 @@
     <string name="four_button_app_name">Four Button Test</string>
     <string name="two_button_app_name">Two Button Test</string>
     <string name="visibility_test_placeholder_text">No Message Received</string>
+    <string name="title_activity_voice_test">VoiceTest</string>
+    <string name="reply_label">Speak Now</string>
+    <string name="done">Done</string>
+    <string name="voice_test_notification_contents">Swipe left to start the test</string>
+    <string name="start">Start</string>
+    <string name="visibility_test_notification_title">Visibility Test</string>
 </resources>

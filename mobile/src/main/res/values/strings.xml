@@ -37,4 +37,9 @@
     <string name="dialog_log_data_gender_title">Gender:</string>
     <string name="save">Save</string>
 
+    <!-- Voice Fragment -->
+    <string name="voice_test_into_message">Wear Voice Test\n\nThis test spawns a notification with \na voice reply action on the watch.It can be \nused to analyze the ability of the testee \nto react to a notification using voice input</string>
+    <string name="spawn_notification">Spawn Notification</string>
+    <string name="response_placeholder">Response will show up here</string>
+
 </resources>

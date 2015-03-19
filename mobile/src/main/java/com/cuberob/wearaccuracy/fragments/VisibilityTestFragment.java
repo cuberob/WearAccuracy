@@ -14,13 +14,11 @@ import android.widget.Spinner;
 import com.cuberob.Paths;
 import com.cuberob.wearaccuracy.R;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
-import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.MessageEvent;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VisibilityTestFragment extends Fragment implements MessageApi.MessageListener{
+public class VisibilityTestFragment extends Fragment{
 
     public static final String TAG = "VisibilityTest";
     SendMessageListener mListener;
@@ -85,10 +83,5 @@ public class VisibilityTestFragment extends Fragment implements MessageApi.Messa
             throw new ClassCastException(activity.toString()
                     + " must implement SendMessageListener");
         }
-    }
-
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-
     }
 }
