@@ -12,3 +12,6 @@ Visibility test interface with drawer
 
 ![alt tag](https://raw.githubusercontent.com/cuberob/WearAccuracy/master/extras/VibrationTest.png)
 Vibration test interface
+
+![alt tag](https://raw.githubusercontent.com/cuberob/WearAccuracy/master/extras/VoiceTest.png)
+Voice test interface
