@@ -20,6 +20,7 @@ import com.cuberob.wearaccuracy.adapters.DrawerAdapter;
 import com.cuberob.wearaccuracy.fragments.ButtonTestFragment;
 import com.cuberob.wearaccuracy.fragments.VibrationTestFragment;
 import com.cuberob.wearaccuracy.fragments.VisibilityTestFragment;
+import com.cuberob.wearaccuracy.fragments.VoiceTestFragment;
 import com.cuberob.wearaccuracy.interfaces.SendMessageListener;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
@@ -116,6 +117,9 @@ public class MainActivity extends BaseActivity implements ListView.OnItemClickLi
                 break;
             case 2:
                 fragment = new VibrationTestFragment();
+                break;
+            case 3:
+                fragment = new VoiceTestFragment();
                 break;
         }
 

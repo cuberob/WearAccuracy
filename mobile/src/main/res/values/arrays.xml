@@ -6,11 +6,13 @@
         <item>Button Test</item>
         <item>Visibility Test</item>
         <item>Vibration Test</item>
+        <item>Voice Test</item>
     </string-array>
     <array name="drawer_menu_icons">
         <item>@drawable/button_test_icon</item>
         <item>@drawable/visibility_test_icon</item>
         <item>@drawable/vibration_test_icon</item>
+        <item>@drawable/microphone_test_icon</item>
     </array>
 
 
