@@ -20,7 +20,7 @@
 
     <!-- Visibility Fragment -->
     <string name="visibility_test_intro_message">Wear Visibility Test\n\nThis test can be used to check the ability of the testee\nto read text at a certain size</string>
-    <string name="default_text_size_button_title">Show Default Notification</string>
+    <string name="start_visibility_test_button_text">Start Test</string>
 
     <!-- Vibration Fragment -->
     <string name="vibration_test_intro_message">Wear Feedback Test\n\nThis simple test can be used to get an indication\nof the vibration duration that is necessary\nfor it to be recognized by the audience</string>

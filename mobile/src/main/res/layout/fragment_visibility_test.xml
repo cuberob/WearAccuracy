@@ -24,7 +24,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_text_size_button_title"
+            android:text="@string/start_visibility_test_button_text"
             android:id="@+id/button" />
     </LinearLayout>
 
